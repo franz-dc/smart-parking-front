@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 
 // components
 import {
+  Home,
   Availability,
   NotFound,
   Reserve,
@@ -41,6 +42,7 @@ const App = () => {
             <LocalizationProvider dateAdapter={DateAdapter}>
               <BrowserRouter>
                 <Routes>
+                  <Route path='/' element={<Home />} />
                   <Route path='/availability' element={<Availability />} />
                   <Route path='/reserve' element={<Reserve />} />
 
