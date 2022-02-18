@@ -170,7 +170,7 @@ const AdminDashboard = () => {
                 mb: 2,
               }}
             >
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} lg={4}>
                 <Paper sx={{ p: 2 }}>
                   <EChartsReact
                     option={{
@@ -186,8 +186,24 @@ const AdminDashboard = () => {
                       series: {
                         type: 'pie',
                         top: 10,
+                        radius: ['50%', '80%'],
+                        avoidLabelOverlap: false,
                         label: {
                           show: false,
+                          position: 'center',
+                          emphasis: {
+                            show: true,
+                          },
+                        },
+                        labelLine: {
+                          show: false,
+                        },
+                        emphasis: {
+                          label: {
+                            show: true,
+                            fontSize: '30',
+                            fontWeight: 'bold',
+                          },
                         },
                         data: [
                           {
@@ -217,7 +233,7 @@ const AdminDashboard = () => {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} lg={8}>
                 <Paper sx={{ p: 2 }}>
                   <EChartsReact
                     option={{
