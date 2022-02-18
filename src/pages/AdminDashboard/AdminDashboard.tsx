@@ -177,6 +177,9 @@ const AdminDashboard = () => {
                       title: {
                         text: `Current Lot Status`,
                       },
+                      tooltip: {
+                        trigger: 'item',
+                      },
                       legend: {
                         orient: 'vertical',
                         x: 'left',
