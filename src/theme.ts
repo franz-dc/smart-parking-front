@@ -3,6 +3,9 @@ import { createTheme } from '@mui/material';
 const defaultTheme = createTheme();
 
 export const theme = createTheme({
+  // palette: {
+  //   mode: 'dark',
+  // },
   typography: {
     h1: {
       fontSize: defaultTheme.typography.pxToRem(35),
@@ -38,10 +41,15 @@ export const theme = createTheme({
       fontSize: defaultTheme.typography.pxToRem(14),
     },
   },
+  palette: {
+    background: {
+      default: '#fafafa',
+    },
+  },
   components: {
     MuiButton: {
       defaultProps: {
-        color: 'primary',
+        variant: 'contained',
       },
     },
     MuiCssBaseline: {
@@ -58,6 +66,7 @@ export const theme = createTheme({
     MuiFormControl: {
       defaultProps: {
         margin: 'normal',
+        fullWidth: true,
       },
       styleOverrides: {
         marginDense: {
