@@ -1,6 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 import { Paper, Grid, Box, Typography } from '@mui/material';
 import { pink, brown, green, blue } from '@mui/material/colors';
+import {
+  DataGrid,
+  GridColDef,
+  GridValueGetterParams,
+  GridValueFormatterParams,
+  GridSortModel,
+} from '@mui/x-data-grid';
 import { UserWrapper, LoadingIndicator, ErrorAlert } from 'components';
 import { useQueries } from 'react-query';
 import { usersService, lotsService, reservationsService } from 'services';
@@ -18,6 +25,7 @@ import {
   CardBulleted as CardBulletedIcon,
 } from 'mdi-material-ui';
 import { getAvailabilityColor } from 'utils';
+import { IReservation, IUser } from 'types';
 
 // charts
 import EChartsReact from 'echarts-for-react';
@@ -29,8 +37,12 @@ import {
   TitleComponent,
 } from 'echarts/components';
 
+interface IPopulatedReservation extends IReservation {
+  reserverData?: IUser;
+}
+
 const DATE_RANGE_START: Duration = {
-  days: 7,
+  days: 30,
 };
 
 echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart]);
@@ -65,6 +77,13 @@ const AdminDashboard = () => {
   const users = usersData || [];
   const lots = lotsData || [];
   const reservations = reservationsData || [];
+
+  const populatedReservations: IPopulatedReservation[] = reservations.map(
+    (reservation: IReservation) => ({
+      ...reservation,
+      reserverData: users.find((user) => user.id === reservation.reserver),
+    })
+  );
 
   const userCount = users.length;
   const lotCount = lots.length;
@@ -109,6 +128,74 @@ const AdminDashboard = () => {
       value: reservationCount,
       icon: CardBulletedIcon,
       color: blue[500],
+    },
+  ];
+
+  const columns: GridColDef[] = [
+    {
+      field: 'createdAt',
+      headerName: 'Date created',
+      type: 'dateTime',
+      width: 180,
+      valueGetter: (params: GridValueFormatterParams) =>
+        format(params.value as Date, 'PPp'),
+    },
+    {
+      field: 'name',
+      headerName: 'Reserver',
+      width: 220,
+      valueGetter: (
+        params: GridValueGetterParams<string, IPopulatedReservation>
+      ) =>
+        params.row.reserverData
+          ? `${params.row.reserverData?.firstName} ${params.row.reserverData?.lastName}`
+          : '',
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      width: 220,
+      valueGetter: (
+        params: GridValueGetterParams<string, IPopulatedReservation>
+      ) => params.row.reserverData?.email || '',
+    },
+    {
+      field: 'contactNumber',
+      headerName: 'Contact number',
+      width: 220,
+      valueGetter: (
+        params: GridValueGetterParams<string, IPopulatedReservation>
+      ) => params.row.reserverData?.contactNumber || '',
+    },
+    {
+      field: 'floor',
+      headerName: 'Floor',
+      width: 150,
+    },
+    {
+      field: 'area',
+      headerName: 'Area',
+      width: 120,
+    },
+    {
+      field: 'lotNumber',
+      headerName: 'Lot',
+      width: 120,
+    },
+    {
+      field: 'dateTime',
+      headerName: 'Reservation date',
+      type: 'dateTime',
+      width: 180,
+      valueGetter: (params: GridValueFormatterParams) =>
+        format(params.value as Date, 'PPp'),
+    },
+  ];
+
+  const sortModel: GridSortModel = [
+    {
+      field: 'createdAt',
+      sort: 'desc',
     },
   ];
 
@@ -294,6 +381,18 @@ const AdminDashboard = () => {
                 </Paper>
               </Grid>
             </Grid>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant='h3' component='h2' sx={{ mb: 2 }}>
+                Reservation list (last {dateRangeStartInWords})
+              </Typography>
+              <DataGrid
+                columns={columns}
+                rows={populatedReservations}
+                sortModel={sortModel}
+                autoHeight
+                loading={isLoading}
+              />
+            </Paper>
           </>
         )}
       </UserWrapper>
