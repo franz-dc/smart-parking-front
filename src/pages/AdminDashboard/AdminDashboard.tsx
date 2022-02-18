@@ -189,23 +189,18 @@ const AdminDashboard = () => {
                       series: {
                         type: 'pie',
                         top: 10,
+                        left: 75,
                         radius: ['50%', '80%'],
                         avoidLabelOverlap: false,
                         label: {
                           show: false,
-                          position: 'center',
-                          emphasis: {
-                            show: true,
-                          },
                         },
                         labelLine: {
                           show: false,
                         },
                         emphasis: {
                           label: {
-                            show: true,
-                            fontSize: '30',
-                            fontWeight: 'bold',
+                            show: false,
                           },
                         },
                         data: [
