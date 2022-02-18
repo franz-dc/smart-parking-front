@@ -388,7 +388,11 @@ const AdminDashboard = () => {
               <DataGrid
                 columns={columns}
                 rows={populatedReservations}
-                sortModel={sortModel}
+                initialState={{
+                  sorting: {
+                    sortModel,
+                  },
+                }}
                 autoHeight
                 loading={isLoading}
               />
