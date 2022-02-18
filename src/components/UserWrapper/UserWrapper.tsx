@@ -13,9 +13,9 @@ import {
   Typography,
 } from '@mui/material';
 import { Menu as MenuIcon } from 'mdi-material-ui';
-// https://mui.com/components/app-bar/#main-content
-// https://console.firebase.google.com/u/0/project/smart-parking-395aa/authentication/providers
-// https://www.youtube.com/watch?v=jCY6DH8F4oc
+import { Link } from 'react-router-dom';
+
+const brandLogo = process.env.PUBLIC_URL + '/logo192.png';
 
 interface UserWrapperProps {
   title: string;
@@ -30,6 +30,10 @@ const pages = [
   {
     name: 'Reserve',
     link: '/reserve',
+  },
+  {
+    name: 'Reservations',
+    link: '/reservations',
   },
   {
     name: 'Availability',
@@ -63,15 +67,11 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
       <AppBar position='sticky'>
         <Container maxWidth='xl'>
           <Toolbar disableGutters>
-            <Typography
-              variant='h6'
-              noWrap
-              component='div'
+            <Avatar
+              alt='Brand'
+              src={brandLogo}
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-            >
-              LOGO
-            </Typography>
-
+            />
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'
@@ -80,6 +80,7 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
                 aria-haspopup='true'
                 onClick={handleOpenNavMenu}
                 color='inherit'
+                edge='start'
               >
                 <MenuIcon />
               </IconButton>
@@ -102,32 +103,34 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                    <Typography textAlign='center'>{page}</Typography>
+                  <MenuItem
+                    key={page.name}
+                    onClick={handleCloseNavMenu}
+                    component={Link}
+                    to={page.link}
+                  >
+                    <Typography textAlign='center'>{page.name}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
-            <Typography
-              variant='h6'
-              noWrap
-              component='div'
-              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-            >
-              LOGO
-            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <Avatar alt='Brand' src={brandLogo} />
+            </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
                   key={page.name}
+                  variant='text'
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
+                  component={Link}
+                  to={page.link}
                 >
                   {page.name}
                 </Button>
               ))}
             </Box>
-
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -159,10 +162,16 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
             </Box>
           </Toolbar>
         </Container>
+        <Container
+          maxWidth='xl'
+          style={{ paddingTop: '1rem', paddingBottom: '1rem' }}
+        >
+          <Typography variant='h1'>{title}</Typography>
+        </Container>
       </AppBar>
-      <Box paddingTop={3} paddingLeft={2} paddingRight={2}>
+      <Container maxWidth='xl' style={{ paddingTop: '1.5rem' }}>
         {children}
-      </Box>
+      </Container>
     </>
   );
 };
