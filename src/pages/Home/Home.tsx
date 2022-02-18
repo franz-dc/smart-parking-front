@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Box, Typography, Grid, Button } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
@@ -120,6 +121,8 @@ const Home = () => {
               The future of parking starts here
             </Typography>
             <Button
+              component={Link}
+              to='/register'
               sx={{
                 backgroundColor: 'white',
                 color: 'black',
