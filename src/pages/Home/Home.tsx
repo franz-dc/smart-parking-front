@@ -112,8 +112,7 @@ const Home = () => {
                 fontSize: {
                   xs: '4rem',
                   md: '5rem',
-                  lg: '5.5rem',
-                  xl: '6.5rem',
+                  lg: '5.75rem',
                 },
                 marginBottom: 4,
               }}
