@@ -49,7 +49,7 @@ const Home = () => {
               top: 40,
               left: {
                 xs: 40,
-                md: '20%',
+                md: '15%',
               },
             }}
           >
@@ -88,15 +88,15 @@ const Home = () => {
               top: '50%',
               left: {
                 xs: '50%',
-                md: '20%',
+                md: '15%',
               },
               transform: {
                 xs: 'translate(-50%, -50%)',
                 md: 'translateY(-50%)',
               },
               width: {
-                xs: '85%',
-                md: '110%',
+                xs: '80%',
+                // md: '110%',
               },
               textAlign: {
                 xs: 'center',
@@ -108,16 +108,27 @@ const Home = () => {
               variant='h1'
               sx={{
                 color: 'white',
-                textTransform: 'uppercase',
+                // textTransform: 'uppercase',
                 fontSize: {
                   xs: '4rem',
-                  md: '5rem',
-                  lg: '5.75rem',
+                  md: '4.5rem',
+                  lg: '5rem',
                 },
                 marginBottom: 4,
               }}
             >
-              The future of parking starts here
+              The future of parking is here
+            </Typography>
+            <Typography
+              variant='body1'
+              sx={{
+                marginBottom: 4,
+                color: alpha('#fff', 0.75),
+                fontSize: '1.25rem',
+              }}
+            >
+              Park with speed, security and convenience, plus the added ease of
+              preparing for your spot beforehand.
             </Typography>
             <Button
               component={Link}
@@ -125,7 +136,7 @@ const Home = () => {
               sx={{
                 backgroundColor: 'white',
                 color: 'black',
-                borderRadius: 9999,
+                borderRadius: 3,
                 fontSize: '1.5rem',
                 px: 3,
                 textTransform: 'none',
