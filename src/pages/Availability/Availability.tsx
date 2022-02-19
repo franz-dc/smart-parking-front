@@ -27,7 +27,8 @@ import {
 import { useQueries } from 'react-query';
 import { IArea, IFloor } from 'types';
 
-// ! ADD ENTRANCE
+// ! ADD ENTRANCES
+// ! DECIDE ON A WAY TO STRUCTURE THIS ON THE AREAS DOCUMENT
 
 const STATUSES = ['available', 'reserved', 'occupied', 'not available'];
 
