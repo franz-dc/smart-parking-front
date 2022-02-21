@@ -13,7 +13,9 @@ import {
   Typography,
 } from '@mui/material';
 import { Menu as MenuIcon } from 'mdi-material-ui';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { authService } from 'services';
+import { useUserContext } from 'hooks';
 
 const brandLogo = process.env.PUBLIC_URL + '/logo192.png';
 
@@ -41,9 +43,29 @@ const pages = [
   },
 ];
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
+  const user = useUserContext();
+
+  const navigate = useNavigate();
+
+  const settings = [
+    {
+      name: 'Account Settings',
+      onClick: () => {
+        handleCloseNavMenu();
+        navigate('/account-settings');
+      },
+    },
+    {
+      name: 'Sign Out',
+      onClick: () => {
+        handleCloseNavMenu();
+        authService.signOut();
+        navigate('/');
+      },
+    },
+  ];
+
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -134,7 +156,7 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                  <Avatar children={user?.displayName?.charAt(0)} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -154,8 +176,8 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                    <Typography textAlign='center'>{setting}</Typography>
+                  <MenuItem key={setting.name} onClick={setting.onClick}>
+                    <Typography>{setting.name}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
