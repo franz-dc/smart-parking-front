@@ -79,6 +79,21 @@ export const theme = createTheme({
         },
       },
     },
+    // @ts-ignore
+    MuiLoadingButton: {
+      defaultProps: {
+        variant: 'contained',
+      },
+    },
+    // @ts-ignore
+    MuiTabPanel: {
+      styleOverrides: {
+        root: {
+          paddingLeft: 0,
+          paddingRight: 0,
+        },
+      },
+    },
     MuiTextField: {
       defaultProps: {
         variant: 'outlined',
