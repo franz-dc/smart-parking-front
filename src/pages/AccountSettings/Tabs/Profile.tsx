@@ -2,17 +2,19 @@ import { LoadingButton } from '@mui/lab';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import * as Yup from 'yup';
-import { authService } from 'services';
+import { usersService } from 'services';
 import { useSnackbar } from 'notistack';
 import { useUserContext } from 'hooks';
 
 const Profile = () => {
-  const user = useUserContext();
+  const { user, setUser } = useUserContext();
   const { enqueueSnackbar } = useSnackbar();
 
   const validationSchema = Yup.object()
     .shape({
-      displayName: Yup.string().required('Required'),
+      firstName: Yup.string().required('Required'),
+      lastName: Yup.string().required('Required'),
+      contactNumber: Yup.string().required('Required'),
     })
     .required();
 
@@ -20,7 +22,16 @@ const Profile = () => {
     values: Yup.InferType<typeof validationSchema>
   ) => {
     try {
-      await authService.updateUser(values);
+      await usersService.updateUser(values);
+      if (user) {
+        setUser({
+          ...user,
+          userDetails: {
+            ...user.userDetails,
+            ...values,
+          },
+        });
+      }
       enqueueSnackbar('Account settings updated', { variant: 'success' });
     } catch (err) {
       enqueueSnackbar('Something went wrong', { variant: 'error' });
@@ -31,7 +42,9 @@ const Profile = () => {
     <Formik
       enableReinitialize
       initialValues={{
-        displayName: user?.displayName || '',
+        firstName: user?.userDetails?.firstName || '',
+        lastName: user?.userDetails?.lastName || '',
+        contactNumber: user?.userDetails?.contactNumber || '',
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
@@ -40,11 +53,32 @@ const Profile = () => {
         <Form>
           <Field
             component={TextField}
-            id='displayName'
-            name='displayName'
-            label='Full Name'
+            id='firstName'
+            name='firstName'
+            label='First Name'
+            autoComplete='given-name'
           />
-          <LoadingButton type='submit' fullWidth loading={isSubmitting}>
+          <Field
+            component={TextField}
+            id='lastName'
+            name='lastName'
+            label='Last Name'
+            autoComplete='family-name'
+          />
+          <Field
+            component={TextField}
+            id='contactNumber'
+            name='contactNumber'
+            label='Contact Number'
+            autoComplete='tel'
+          />
+          <LoadingButton
+            type='submit'
+            variant='contained'
+            color='primary'
+            loading={isSubmitting}
+            fullWidth
+          >
             Save
           </LoadingButton>
         </Form>

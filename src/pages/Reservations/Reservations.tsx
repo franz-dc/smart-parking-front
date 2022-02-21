@@ -18,7 +18,7 @@ import { useQuery } from 'react-query';
 import { format, compareDesc } from 'date-fns';
 
 const Reservations = () => {
-  const user = useUserContext();
+  const { user } = useUserContext();
 
   const { data, isError, isLoading } = useQuery<IReservation[]>(
     'reservations',

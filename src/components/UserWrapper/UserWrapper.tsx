@@ -16,6 +16,7 @@ import { Menu as MenuIcon } from 'mdi-material-ui';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from 'services';
 import { useUserContext } from 'hooks';
+import { formatCurrency } from 'utils';
 
 const brandLogo = process.env.PUBLIC_URL + '/logo192.png';
 
@@ -30,12 +31,12 @@ const pages = [
     link: '/',
   },
   {
-    name: 'Reserve',
-    link: '/reserve',
-  },
-  {
     name: 'Reservations',
     link: '/reservations',
+  },
+  {
+    name: 'Reserve',
+    link: '/reserve',
   },
   {
     name: 'Availability',
@@ -44,11 +45,18 @@ const pages = [
 ];
 
 const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
-  const user = useUserContext();
+  const { user, setUser } = useUserContext();
 
   const navigate = useNavigate();
 
   const settings = [
+    {
+      name: 'Top-up Credits',
+      onClick: () => {
+        handleCloseNavMenu();
+        navigate('/top-up');
+      },
+    },
     {
       name: 'Account Settings',
       onClick: () => {
@@ -61,6 +69,7 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
       onClick: () => {
         handleCloseNavMenu();
         authService.signOut();
+        setUser(null);
         navigate('/');
       },
     },
@@ -152,6 +161,17 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
                   {page.name}
                 </Button>
               ))}
+            </Box>
+            <Box sx={{ flexGrow: 0, mr: 2 }}>
+              <Button
+                variant='text'
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to='/top-up'
+              >
+                {formatCurrency(user?.userDetails?.credits || 0)}
+              </Button>
             </Box>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>

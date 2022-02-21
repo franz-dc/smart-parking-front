@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from './theme';
 import { SnackbarProvider } from 'notistack';
@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { UserContext } from 'contexts';
+import { IExtendedUser } from 'types';
+import { usersService } from 'services';
 
 // components
 import {
@@ -38,17 +40,41 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
-  const [user, setUser] = useState<User | null>(null);
-
   const auth = getAuth();
 
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  const [user, setUser] = useState<IExtendedUser | null>(null);
+
   onAuthStateChanged(auth, (user) => {
-    setUser(user);
+    setCurrentUser(user);
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentUser) {
+        const userData = await usersService.getUserById(currentUser.uid);
+
+        setUser({
+          ...currentUser,
+          userDetails: userData || {
+            id: currentUser?.uid || '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            contactNumber: '',
+            credits: 0,
+          },
+        });
+      }
+    };
+
+    fetchData();
+  }, [currentUser]);
 
   return (
     <ThemeProvider theme={theme}>
-      <UserContext.Provider value={user}>
+      <UserContext.Provider value={{ user, setUser }}>
         <CssBaseline />
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>

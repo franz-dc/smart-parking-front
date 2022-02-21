@@ -23,15 +23,22 @@ const Login = () => {
       await authService.signIn(values);
       navigate('/reservations');
     } catch (err: any) {
+      let message = 'Something went wrong';
+
       switch (err?.code) {
         case 'auth/user-not-found':
         case 'auth/wrong-password':
-          enqueueSnackbar('Invalid email or password', { variant: 'error' });
+          message = 'Invalid email or password';
+          break;
+        case 'auth/user-disabled':
+          message = 'Account is disabled';
           break;
         default:
-          enqueueSnackbar('Something went wrong', { variant: 'error' });
+          console.error(err?.code || message);
           break;
       }
+
+      enqueueSnackbar(message, { variant: 'error' });
     }
   };
 

@@ -10,10 +10,13 @@ const Security = () => {
 
   const validationSchema = Yup.object()
     .shape({
+      currentPassword: Yup.string()
+        .required('Required')
+        .min(8, 'Password must be at least 8 characters'),
       newPassword: Yup.string()
         .min(8, 'Password must be at least 8 characters')
         .required('Required'),
-      confirmPassword: Yup.string()
+      confirmNewPassword: Yup.string()
         .required('Required')
         .test('passwordsMatch', 'Passwords must match', function (value) {
           return this.parent.newPassword === value;
@@ -21,14 +24,16 @@ const Security = () => {
     })
     .required();
 
-  const handleSubmit = async ({
-    newPassword,
-  }: Yup.InferType<typeof validationSchema>) => {
+  const handleSubmit = async (
+    values: Yup.InferType<typeof validationSchema>
+  ) => {
     try {
-      await authService.updatePassword(newPassword);
+      await authService.updatePassword(values);
       enqueueSnackbar('Account settings updated', { variant: 'success' });
-    } catch (err) {
-      enqueueSnackbar('Something went wrong', { variant: 'error' });
+    } catch (err: any) {
+      enqueueSnackbar(err?.message || 'Something went wrong', {
+        variant: 'error',
+      });
     }
   };
 
@@ -36,14 +41,22 @@ const Security = () => {
     <Formik
       enableReinitialize
       initialValues={{
+        currentPassword: '',
         newPassword: '',
-        confirmPassword: '',
+        confirmNewPassword: '',
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
         <Form>
+          <Field
+            component={TextField}
+            id='currentPassword'
+            name='currentPassword'
+            label='Current Password'
+            type='password'
+          />
           <Field
             component={TextField}
             id='newPassword'
@@ -53,8 +66,8 @@ const Security = () => {
           />
           <Field
             component={TextField}
-            id='confirmPassword'
-            name='confirmPassword'
+            id='confirmNewPassword'
+            name='confirmNewPassword'
             label='Confirm Password'
             type='password'
           />

@@ -1,4 +1,10 @@
-import { createContext } from 'react';
-import { User } from 'firebase/auth';
+import { Dispatch, SetStateAction, createContext } from 'react';
+import { IExtendedUser } from 'types';
 
-export const UserContext = createContext<User | null>(null);
+export const UserContext = createContext<{
+  user: IExtendedUser | null;
+  setUser: Dispatch<SetStateAction<IExtendedUser | null>>;
+}>({
+  user: null,
+  setUser: () => {},
+});

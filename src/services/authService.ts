@@ -7,7 +7,7 @@ import {
   updatePassword,
 } from 'firebase/auth';
 import { auth } from 'firebase-config';
-import { IUserCredentials } from 'types';
+import { IUserCredentials, IPassword } from 'types';
 
 export const authService = {
   register: async ({ email, password }: IUserCredentials) => {
@@ -28,11 +28,30 @@ export const authService = {
       throw new Error('User not logged in. Please sign in first.');
     }
   },
-  updatePassword: async (password: string) => {
+  updatePassword: async ({ currentPassword, newPassword }: IPassword) => {
     const auth = getAuth();
     if (auth.currentUser) {
-      const updatedUser = await updatePassword(auth.currentUser, password);
-      return updatedUser;
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          auth.currentUser.email || '',
+          currentPassword
+        );
+      } catch (err: any) {
+        switch (err.code) {
+          case 'auth/wrong-password':
+            throw new Error('Current password is incorrect.');
+          case 'auth/too-many-requests':
+            throw new Error(
+              'Too many password guesses. Please try again later.'
+            );
+          default:
+            console.error(err?.message || err);
+            throw new Error('Something went wrong. Please try again.');
+        }
+      }
+
+      await updatePassword(auth.currentUser, newPassword);
     } else {
       throw new Error('User not logged in. Please sign in first.');
     }

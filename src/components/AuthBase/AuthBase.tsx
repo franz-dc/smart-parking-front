@@ -39,7 +39,7 @@ const AuthBase: FC<AuthBaseProps> = ({ children, type }) => (
       sx={{
         height: '100vh',
         display: {
-          sm: 'none',
+          xs: 'none',
           lg: 'block',
         },
         backgroundImage: `url(${bg})`,
