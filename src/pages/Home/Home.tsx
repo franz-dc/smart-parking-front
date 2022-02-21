@@ -132,7 +132,7 @@ const Home = () => {
             </Typography>
             <Button
               component={Link}
-              to='/register'
+              to='/login'
               sx={{
                 backgroundColor: 'white',
                 color: 'black',
