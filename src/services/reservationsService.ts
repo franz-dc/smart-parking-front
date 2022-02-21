@@ -17,6 +17,9 @@ const queryFromReservationDate = (dateTime: Date) =>
 const queryFromDateCreated = (createdAt: Date) =>
   query(reservationsRef, where('createdAt', '>', createdAt));
 
+const queryByUserId = (userId: string) =>
+  query(reservationsRef, where('reserver', '==', userId));
+
 const mappedData = (data: QuerySnapshot<DocumentData>) =>
   data.docs.map((doc) => ({
     id: doc.id,
@@ -28,6 +31,10 @@ const mappedData = (data: QuerySnapshot<DocumentData>) =>
 export const reservationsService = {
   getReservations: async (): Promise<IReservation[]> => {
     const data = await getDocs(reservationsRef);
+    return mappedData(data);
+  },
+  getReservationsByUser: async (userId: string): Promise<IReservation[]> => {
+    const data = await getDocs(queryByUserId(userId));
     return mappedData(data);
   },
   getReservationsFromReservationDate: async (
