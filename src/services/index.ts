@@ -1,3 +1,4 @@
+export * from './authService';
 export * from './areasService';
 export * from './floorsService';
 export * from './lotsService';
