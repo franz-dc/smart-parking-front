@@ -1,3 +1,4 @@
+export * from './IUserCredentials';
 export * from './IArea';
 export * from './IFloor';
 export * from './ILot';
