@@ -4,3 +4,4 @@ export * from './IFloor';
 export * from './ILot';
 export * from './IReservation';
 export * from './IUser';
+export * from './IRate';
