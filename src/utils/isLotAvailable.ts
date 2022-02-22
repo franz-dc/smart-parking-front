@@ -23,17 +23,6 @@ export const isLotAvailable = (
     const startTime = reservation.dateTime;
     const endTime = add(startTime, { minutes: reservation.duration });
 
-    console.log({
-      start: isWithinInterval(newReservationStartTime, {
-        start: startTime,
-        end: endTime,
-      }),
-      end: isWithinInterval(newReservationEndTime, {
-        start: startTime,
-        end: endTime,
-      }),
-    });
-
     if (
       isWithinInterval(newReservationStartTime, {
         start: startTime,

@@ -66,8 +66,6 @@ export const reservationsService = {
       reservation
     );
 
-    console.log(lotReservations);
-
     if (!isLotCurrentlyAvailable) throw new Error('LOT_UNAVAILABLE');
 
     // get the user's data and check if the user has enough balance

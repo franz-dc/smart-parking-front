@@ -31,9 +31,7 @@ const Login = () => {
     ...userCredentials
   }: Yup.InferType<typeof validationSchema>) => {
     try {
-      const user = await authService.register(userCredentials);
-
-      console.log(user);
+      await authService.register(userCredentials);
       navigate('/account-settings');
     } catch (err: any) {
       let message = 'Something went wrong';
