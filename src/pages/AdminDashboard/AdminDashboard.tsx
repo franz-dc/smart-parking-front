@@ -11,13 +11,7 @@ import {
 import { UserWrapper, LoadingIndicator, ErrorAlert } from 'components';
 import { useQueries } from 'react-query';
 import { usersService, lotsService, reservationsService } from 'services';
-import {
-  sub,
-  formatDistanceToNowStrict,
-  format,
-  isSameDay,
-  Duration,
-} from 'date-fns';
+import { sub, formatDistanceToNowStrict, format, isSameDay } from 'date-fns';
 import {
   Account as AccountIcon,
   Parking as ParkingIcon,
@@ -25,6 +19,7 @@ import {
   CardBulleted as CardBulletedIcon,
 } from 'mdi-material-ui';
 import { getAvailabilityColor } from 'utils';
+import { DATE_RANGE_START } from 'utils/constants';
 import { IReservation, IUser } from 'types';
 
 // charts
@@ -40,10 +35,6 @@ import {
 interface IPopulatedReservation extends IReservation {
   reserverData?: IUser;
 }
-
-const DATE_RANGE_START: Duration = {
-  days: 30,
-};
 
 echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart]);
 
