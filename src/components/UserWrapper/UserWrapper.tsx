@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Menu as MenuIcon } from 'mdi-material-ui';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { authService } from 'services';
 import { useUserContext } from 'hooks';
 import { formatCurrency } from 'utils';
@@ -133,16 +133,24 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem
-                    key={page.name}
-                    onClick={handleCloseNavMenu}
-                    component={Link}
-                    to={page.link}
-                  >
-                    <Typography textAlign='center'>{page.name}</Typography>
-                  </MenuItem>
-                ))}
+                {pages.map((page) => {
+                  return (
+                    <MenuItem
+                      key={page.name}
+                      onClick={handleCloseNavMenu}
+                      component={NavLink}
+                      to={page.link}
+                      // @ts-ignore
+                      style={({ isActive }) => {
+                        return isActive
+                          ? { backgroundColor: 'rgba(25, 118, 210, 0.08)' }
+                          : {};
+                      }}
+                    >
+                      <Typography textAlign='center'>{page.name}</Typography>
+                    </MenuItem>
+                  );
+                })}
               </Menu>
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -155,14 +163,28 @@ const UserWrapper: FC<UserWrapperProps> = ({ title, children }) => {
                   variant='text'
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
-                  component={Link}
+                  component={NavLink}
                   to={page.link}
+                  // @ts-ignore
+                  style={({ isActive }) => ({
+                    textUnderlinePosition: 'under',
+                    textDecoration: isActive ? 'underline' : 'none',
+                  })}
                 >
                   {page.name}
                 </Button>
               ))}
             </Box>
-            <Box sx={{ flexGrow: 0, mr: 2 }}>
+            <Box
+              sx={{
+                flexGrow: 0,
+                mr: 2,
+                display: {
+                  xs: 'none',
+                  md: 'block',
+                },
+              }}
+            >
               <Button
                 variant='text'
                 onClick={handleCloseNavMenu}
