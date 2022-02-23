@@ -8,6 +8,7 @@ import {
   QuerySnapshot,
   DocumentData,
   writeBatch,
+  increment,
 } from 'firebase/firestore';
 import { IReservation, IRates } from 'types';
 import { usersService } from 'services';
@@ -15,7 +16,7 @@ import { getReservationAmount, isLotAvailable } from 'utils';
 
 const reservationsRef = collection(db, 'reservations');
 
-const mappedData = (data: QuerySnapshot<DocumentData>) =>
+const mapData = (data: QuerySnapshot<DocumentData>) =>
   data.docs.map((doc) => ({
     id: doc.id,
     ...(doc.data() as Omit<IReservation, 'id'>),
@@ -26,26 +27,26 @@ const mappedData = (data: QuerySnapshot<DocumentData>) =>
 export const reservationsService = {
   getReservations: async (): Promise<IReservation[]> => {
     const data = await getDocs(reservationsRef);
-    return mappedData(data);
+    return mapData(data);
   },
   getReservationsByUser: async (userId: string): Promise<IReservation[]> => {
     const q = query(reservationsRef, where('reserver', '==', userId));
     const data = await getDocs(q);
-    return mappedData(data);
+    return mapData(data);
   },
   getReservationsFromReservationDate: async (
     dateTime: Date
   ): Promise<IReservation[]> => {
     const q = query(reservationsRef, where('dateTime', '>=', dateTime));
     const data = await getDocs(q);
-    return mappedData(data);
+    return mapData(data);
   },
   getReservationsFromDateCreated: async (
     createdAt: Date
   ): Promise<IReservation[]> => {
     const q = query(reservationsRef, where('createdAt', '>=', createdAt));
     const data = await getDocs(q);
-    return mappedData(data);
+    return mapData(data);
   },
   addReservation: async (
     reservation: Omit<IReservation, 'id'>,
@@ -60,7 +61,7 @@ export const reservationsService = {
       where('lotNumber', '==', reservation.lotNumber)
     );
     const lotReservationsData = await getDocs(q);
-    const lotReservations = mappedData(lotReservationsData);
+    const lotReservations = mapData(lotReservationsData);
     const isLotCurrentlyAvailable = isLotAvailable(
       lotReservations,
       reservation
@@ -82,7 +83,7 @@ export const reservationsService = {
     const batch = writeBatch(db);
 
     batch.update(userDocRef, {
-      credits: userDetails.credits - totalAmount,
+      credits: increment(-totalAmount),
     });
 
     batch.set(reservationDocRef, reservation);
