@@ -63,6 +63,15 @@ export const theme = createTheme({
         },
       },
     },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          paddingLeft: 24,
+          paddingRight: 24,
+          paddingBottom: 16,
+        },
+      },
+    },
     MuiFormControl: {
       defaultProps: {
         margin: 'normal',
