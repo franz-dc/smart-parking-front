@@ -29,7 +29,7 @@ const Reservations = () => {
   );
 
   const reservations =
-    data?.sort((a, b) => compareDesc(a.createdAt, b.createdAt)) || [];
+    data?.sort((a, b) => compareDesc(a.dateTime, b.dateTime)) || [];
 
   return (
     <>
@@ -64,7 +64,7 @@ const Reservations = () => {
                     <Grid container spacing={2}>
                       <Grid item xs='auto'>
                         <Avatar sx={{ backgroundColor: 'primary.main' }}>
-                          {index + 1}
+                          {reservations.length - index}
                         </Avatar>
                       </Grid>
                       <Grid item xs>
