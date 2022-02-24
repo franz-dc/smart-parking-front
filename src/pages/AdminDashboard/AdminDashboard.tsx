@@ -20,7 +20,7 @@ import {
 } from 'mdi-material-ui';
 import { getAvailabilityColor } from 'utils';
 import { DATE_RANGE_START } from 'utils/constants';
-import { IReservation, IUser } from 'types';
+import { IReservation, IPopulatedReservation } from 'types';
 
 // charts
 import EChartsReact from 'echarts-for-react';
@@ -31,10 +31,6 @@ import {
   TooltipComponent,
   TitleComponent,
 } from 'echarts/components';
-
-interface IPopulatedReservation extends IReservation {
-  reserverData?: IUser;
-}
 
 echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart]);
 
