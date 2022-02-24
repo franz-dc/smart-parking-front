@@ -1,7 +1,7 @@
 import { ChangeEvent, useMemo } from 'react';
 import { UserWrapper, LoadingIndicator, ErrorAlert } from 'components';
 import { Helmet } from 'react-helmet-async';
-import { Typography, Box, MenuItem } from '@mui/material';
+import { Typography, Box, MenuItem, Paper } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Formik, Form, Field } from 'formik';
 import { TextField, Select } from 'formik-mui';
@@ -152,104 +152,107 @@ const Reserve = () => {
           >
             {({ values, setValues, isSubmitting }) => (
               <Form>
-                <Field
-                  component={Select}
-                  id='floor'
-                  name='floor'
-                  label='Floor'
-                  onChange={(e: ChangeEvent<any>) => {
-                    setValues(
-                      {
-                        ...values,
-                        floor: e.target.value,
-                        area: '',
-                        lotNumber: '',
-                      },
-                      false
-                    );
-                  }}
-                >
-                  <MenuItem value='' disabled>
-                    Select an option
-                  </MenuItem>
-                  {floors.map((floor) => (
-                    <MenuItem value={floor.name} key={floor.name}>
-                      {floor.name}
+                <Paper sx={{ p: 2, mb: 2 }}>
+                  <Field
+                    component={Select}
+                    id='floor'
+                    name='floor'
+                    label='Floor'
+                    onChange={(e: ChangeEvent<any>) => {
+                      setValues(
+                        {
+                          ...values,
+                          floor: e.target.value,
+                          area: '',
+                          lotNumber: '',
+                        },
+                        false
+                      );
+                    }}
+                  >
+                    <MenuItem value='' disabled>
+                      Select an option
                     </MenuItem>
-                  ))}
-                </Field>
-                <Field
-                  component={Select}
-                  id='area'
-                  name='area'
-                  label='Area'
-                  onChange={(e: ChangeEvent<any>) => {
-                    setValues(
-                      {
-                        ...values,
-                        area: e.target.value,
-                        lotNumber: '',
+                    {floors.map((floor) => (
+                      <MenuItem value={floor.name} key={floor.name}>
+                        {floor.name}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                  <Field
+                    component={Select}
+                    id='area'
+                    name='area'
+                    label='Area'
+                    onChange={(e: ChangeEvent<any>) => {
+                      setValues(
+                        {
+                          ...values,
+                          area: e.target.value,
+                          lotNumber: '',
+                        },
+                        false
+                      );
+                    }}
+                  >
+                    <MenuItem value='' disabled>
+                      Select an option
+                    </MenuItem>
+                    {areas
+                      .filter((area) => area.floor === values.floor)
+                      .map((area) => (
+                        <MenuItem value={area.name} key={area.name}>
+                          {area.name}
+                        </MenuItem>
+                      ))}
+                  </Field>
+                  <Field
+                    component={Select}
+                    id='lotNumber'
+                    name='lotNumber'
+                    label='Lot'
+                  >
+                    <MenuItem value='' disabled>
+                      Select an option
+                    </MenuItem>
+                    {lots
+                      .filter(
+                        (lot) =>
+                          lot.floor === values.floor && lot.area === values.area
+                      )
+                      .map((lot) => (
+                        <MenuItem
+                          value={lot.lotNumber.toString()}
+                          key={lot.lotNumber}
+                        >
+                          {[lot.floor, lot.area + lot.lotNumber].join(', ')}
+                        </MenuItem>
+                      ))}
+                  </Field>
+                  <Field
+                    component={DateTimePicker}
+                    label='Date and Time'
+                    name='dateTime'
+                  />
+                  <Field
+                    component={TextField}
+                    type='number'
+                    InputProps={{
+                      inputProps: {
+                        min: 1,
+                        max: MAX_DURATION,
                       },
-                      false
-                    );
-                  }}
-                >
-                  <MenuItem value='' disabled>
-                    Select an option
-                  </MenuItem>
-                  {areas
-                    .filter((area) => area.floor === values.floor)
-                    .map((area) => (
-                      <MenuItem value={area.name} key={area.name}>
-                        {area.name}
-                      </MenuItem>
-                    ))}
-                </Field>
-                <Field
-                  component={Select}
-                  id='lotNumber'
-                  name='lotNumber'
-                  label='Lot'
-                >
-                  <MenuItem value='' disabled>
-                    Select an option
-                  </MenuItem>
-                  {lots
-                    .filter(
-                      (lot) =>
-                        lot.floor === values.floor && lot.area === values.area
-                    )
-                    .map((lot) => (
-                      <MenuItem
-                        value={lot.lotNumber.toString()}
-                        key={lot.lotNumber}
-                      >
-                        {[lot.floor, lot.area + lot.lotNumber].join(', ')}
-                      </MenuItem>
-                    ))}
-                </Field>
-                <Field
-                  component={DateTimePicker}
-                  label='Date and Time'
-                  name='dateTime'
-                />
-                <Field
-                  component={TextField}
-                  type='number'
-                  InputProps={{
-                    inputProps: {
-                      min: 1,
-                      max: MAX_DURATION,
-                    },
-                  }}
-                  label='Duration (minutes)'
-                  name='duration'
-                />
-                <Field
-                  component={TextField}
-                  label='Plate Number'
-                  name='plateNumber'
-                />
+                    }}
+                    label='Duration (minutes)'
+                    name='duration'
+                  />
+                  <Field
+                    component={TextField}
+                    label='Plate Number'
+                    name='plateNumber'
+                    margin='none'
+                  />
+                </Paper>
                 <Typography
                   variant='h3'
                   component='p'
@@ -300,8 +303,8 @@ const Reserve = () => {
                       penalty fee added to your total amount.
                     </li>
                     <li>
-                      Credits are non-refundable if the reservation is
-                      cancelled.
+                      Credits are non-refundable if the reservation is cancelled
+                      or if there is remaining time after using the parking lot.
                     </li>
                   </Typography>
                 </Box>
