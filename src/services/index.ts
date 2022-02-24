@@ -5,3 +5,4 @@ export * from './lotsService';
 export * from './reservationsService';
 export * from './usersService';
 export * from './ratesService';
+export * from './topUpsService';

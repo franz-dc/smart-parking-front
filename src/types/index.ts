@@ -5,3 +5,4 @@ export * from './ILot';
 export * from './IReservation';
 export * from './IUser';
 export * from './IRate';
+export * from './ITopUp';

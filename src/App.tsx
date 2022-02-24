@@ -25,8 +25,10 @@ import {
   Reserve,
   Reservations,
   AccountSettings,
+  TopUp,
   // Admin
   AdminDashboard,
+  UserTopUps,
   // Dev
   Seed,
 } from 'pages';
@@ -99,12 +101,14 @@ const App = () => {
                       path='/account-settings'
                       element={<AccountSettings />}
                     />
+                    <Route path='/top-up' element={<TopUp />} />
 
                     {/* Admin */}
                     <Route
                       path='/admin/dashboard'
                       element={<AdminDashboard />}
                     />
+                    <Route path='/admin/top-ups' element={<UserTopUps />} />
 
                     {/* Dev */}
                     <Route path='/dev/seed' element={<Seed />} />
