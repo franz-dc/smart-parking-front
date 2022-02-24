@@ -29,6 +29,7 @@ import {
   // Admin
   AdminDashboard,
   UserTopUps,
+  ReservationManagement,
   // Dev
   Seed,
 } from 'pages';
@@ -109,6 +110,10 @@ const App = () => {
                       element={<AdminDashboard />}
                     />
                     <Route path='/admin/top-ups' element={<UserTopUps />} />
+                    <Route
+                      path='/admin/reservations'
+                      element={<ReservationManagement />}
+                    />
 
                     {/* Dev */}
                     <Route path='/dev/seed' element={<Seed />} />

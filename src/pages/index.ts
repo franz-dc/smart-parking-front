@@ -14,6 +14,7 @@ export { default as TopUp } from './TopUp';
 // Admin
 export { default as AdminDashboard } from './AdminDashboard';
 export { default as UserTopUps } from './UserTopUps';
+export { default as ReservationManagement } from './ReservationManagement';
 
 // Dev
 export * from './Dev';
