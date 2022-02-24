@@ -178,7 +178,7 @@ const AdminDashboard = () => {
       headerName: 'Reservation date',
       type: 'dateTime',
       width: 180,
-      valueGetter: (params: GridValueFormatterParams) =>
+      valueFormatter: (params: GridValueFormatterParams) =>
         format(params.value as Date, 'PPp'),
     },
   ];
