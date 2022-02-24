@@ -1,6 +1,7 @@
 import { IReservation } from 'types';
 import { add, isWithinInterval } from 'date-fns';
 
+// ! rename to isLotNotReserved
 export const isLotAvailable = (
   reservations: IReservation[],
   newReservation: IReservation | Omit<IReservation, 'id'>
