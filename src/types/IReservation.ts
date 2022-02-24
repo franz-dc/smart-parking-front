@@ -1,3 +1,5 @@
+import { IUser } from 'types';
+
 export interface IReservation {
   id: string;
   dateTime: Date;
@@ -9,4 +11,13 @@ export interface IReservation {
   plateNumber: string;
   earlyEnd: boolean;
   createdAt: Date;
+}
+
+export interface IPopulatedReservation extends IReservation {
+  reserverData?: IUser;
+}
+
+export interface IUpdateReservationParams {
+  id: string;
+  reservation: Omit<IReservation, 'id'>;
 }
