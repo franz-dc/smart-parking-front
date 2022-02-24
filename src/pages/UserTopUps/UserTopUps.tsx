@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { AppBar, Tab } from '@mui/material';
+import { Box, Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { GridRowParams, GridActionsCellItem } from '@mui/x-data-grid';
 import { Check as CheckIcon, Close as CloseIcon } from 'mdi-material-ui';
-import { UserWrapper } from 'components';
+import { AdminWrapper } from 'components';
 import { topUpsService } from 'services';
 import { ITopUp, IUpdateTopUpParams } from 'types';
 import { useSnackbar } from 'notistack';
@@ -115,32 +115,29 @@ const UserTopUps = () => {
   ];
 
   return (
-    <UserWrapper title='User Top-ups'>
+    <AdminWrapper title='User Top-ups'>
       <Helmet title='User Top-ups' />
       <TabContext value={currentTabValue}>
-        <AppBar
-          position='static'
-          color='transparent'
-          elevation={0}
-          sx={{ marginTop: -2 }}
-        >
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginTop: -1 }}>
           <TabList
             onChange={handleTabChange}
             aria-label='top-up tabs'
             variant='scrollable'
+            textColor='secondary'
+            indicatorColor='secondary'
           >
             {tabItems.map((tabItem, index) => (
               <Tab key={index} label={tabItem.name} value={index.toString()} />
             ))}
           </TabList>
-        </AppBar>
+        </Box>
         {tabItems.map((tabItem, index) => (
           <TabPanel key={index} value={index.toString()}>
             <tabItem.component />
           </TabPanel>
         ))}
       </TabContext>
-    </UserWrapper>
+    </AdminWrapper>
   );
 };
 

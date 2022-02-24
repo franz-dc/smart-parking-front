@@ -11,7 +11,7 @@ import {
   increment,
 } from 'firebase/firestore';
 import { IReservation, IRates } from 'types';
-import { usersService } from 'services';
+import { usersService, lotsService } from 'services';
 import { getReservationAmount, isLotAvailable } from 'utils';
 
 const reservationsRef = collection(db, 'reservations');
@@ -62,10 +62,10 @@ export const reservationsService = {
     );
     const lotReservationsData = await getDocs(q);
     const lotReservations = mapData(lotReservationsData);
-    const isLotCurrentlyAvailable = isLotAvailable(
-      lotReservations,
-      reservation
-    );
+    const lotData = await lotsService.getLotByDetails(reservation);
+
+    const isLotCurrentlyAvailable =
+      isLotAvailable(lotReservations, reservation) && lotData?.available;
 
     if (!isLotCurrentlyAvailable) throw new Error('LOT_UNAVAILABLE');
 

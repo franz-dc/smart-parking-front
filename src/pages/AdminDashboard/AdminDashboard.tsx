@@ -8,7 +8,7 @@ import {
   GridValueFormatterParams,
   GridSortModel,
 } from '@mui/x-data-grid';
-import { UserWrapper, LoadingIndicator, ErrorAlert } from 'components';
+import { AdminWrapper, LoadingIndicator, ErrorAlert } from 'components';
 import { useQueries } from 'react-query';
 import { usersService, lotsService, reservationsService } from 'services';
 import { sub, formatDistanceToNowStrict, format, isSameDay } from 'date-fns';
@@ -193,7 +193,7 @@ const AdminDashboard = () => {
   return (
     <>
       <Helmet title='Dashboard' />
-      <UserWrapper title='Dashboard'>
+      <AdminWrapper title='Dashboard'>
         {isLoading && <LoadingIndicator />}
         {isError && <ErrorAlert />}
         {!isLoading && !isError && (
@@ -390,7 +390,7 @@ const AdminDashboard = () => {
             </Paper>
           </>
         )}
-      </UserWrapper>
+      </AdminWrapper>
     </>
   );
 };

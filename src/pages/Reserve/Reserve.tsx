@@ -18,8 +18,16 @@ import {
 import { useQueries } from 'react-query';
 import { useSnackbar } from 'notistack';
 import { useUserContext } from 'hooks';
-import { DEFAULT_RATES, MAX_DURATION } from 'utils/constants';
+import { DEFAULT_RATES, MAX_DURATION_MINUTES } from 'utils/constants';
 import { serverTimestamp } from 'firebase/firestore';
+import { formatDistance, addMinutes } from 'date-fns';
+
+const maxDurationInWords = formatDistance(
+  new Date('2000-01-01T00:00'),
+  addMinutes(new Date('2000-01-01T00:00'), MAX_DURATION_MINUTES)
+);
+
+const maxDurationInWordsContainsMinutes = maxDurationInWords.includes('minute');
 
 const Reserve = () => {
   const { user, setUser } = useUserContext();
@@ -78,7 +86,15 @@ const Reserve = () => {
         )
         .required('Required'),
       dateTime: Yup.date().required('Required'),
-      duration: Yup.number().min(1).max(MAX_DURATION).required('Required'),
+      duration: Yup.number()
+        .min(1)
+        .max(
+          MAX_DURATION_MINUTES,
+          maxDurationInWordsContainsMinutes
+            ? `Max duration is ${maxDurationInWords}`
+            : `Max duration is ${maxDurationInWords} (${MAX_DURATION_MINUTES} mins.)`
+        )
+        .required('Required'),
       plateNumber: Yup.string().required('Required'),
     })
     .required();
@@ -240,7 +256,7 @@ const Reserve = () => {
                     InputProps={{
                       inputProps: {
                         min: 1,
-                        max: MAX_DURATION,
+                        max: MAX_DURATION_MINUTES,
                       },
                     }}
                     label='Duration (minutes)'
