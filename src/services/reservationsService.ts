@@ -9,8 +9,10 @@ import {
   DocumentData,
   writeBatch,
   increment,
+  updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
-import { IReservation, IRates } from 'types';
+import { IReservation, IRates, IUpdateReservationParams } from 'types';
 import { usersService, lotsService } from 'services';
 import { getReservationAmount, isLotAvailable } from 'utils';
 
@@ -41,10 +43,34 @@ export const reservationsService = {
     const data = await getDocs(q);
     return mapData(data);
   },
+  getReservationsByReservationDateRange: async (
+    start: Date,
+    end: Date
+  ): Promise<IReservation[]> => {
+    const q = query(
+      reservationsRef,
+      where('dateTime', '>=', start),
+      where('dateTime', '<=', end)
+    );
+    const data = await getDocs(q);
+    return mapData(data);
+  },
   getReservationsFromDateCreated: async (
     createdAt: Date
   ): Promise<IReservation[]> => {
     const q = query(reservationsRef, where('createdAt', '>=', createdAt));
+    const data = await getDocs(q);
+    return mapData(data);
+  },
+  getReservationsByDateCreatedRange: async (
+    start: Date,
+    end: Date
+  ): Promise<IReservation[]> => {
+    const q = query(
+      reservationsRef,
+      where('createdAt', '>=', start),
+      where('createdAt', '<=', end)
+    );
     const data = await getDocs(q);
     return mapData(data);
   },
@@ -94,5 +120,21 @@ export const reservationsService = {
       id: reservationDocRef.id,
       ...reservation,
     };
+  },
+  updateReservation: async ({
+    id,
+    reservation,
+  }: IUpdateReservationParams): Promise<IReservation> => {
+    const reservationDocRef = doc(reservationsRef, id);
+    await updateDoc(reservationDocRef, reservation);
+    return {
+      id,
+      ...reservation,
+    };
+  },
+  deleteReservation: async (id: string): Promise<string> => {
+    const reservationDocRef = doc(reservationsRef, id);
+    await deleteDoc(reservationDocRef);
+    return id;
   },
 };
