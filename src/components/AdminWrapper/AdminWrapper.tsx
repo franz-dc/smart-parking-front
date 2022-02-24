@@ -15,6 +15,10 @@ const pages = [
     name: 'User Top-ups',
     link: '/admin/top-ups',
   },
+  {
+    name: 'Reservations',
+    link: '/admin/reservations',
+  },
 ];
 
 const AdminWrapper: FC<AdminWrapperProps> = ({ title, children }) => (
