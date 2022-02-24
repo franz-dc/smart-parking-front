@@ -90,7 +90,7 @@ const Reservations = () => {
                 ))}
               </List>
             )}
-            <Button component={Link} to='/reserve' fullWidth>
+            <Button component={Link} to='/reserve' fullWidth sx={{ mb: 2 }}>
               Create Reservation
             </Button>
           </>
