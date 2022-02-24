@@ -7,7 +7,7 @@ export const DEFAULT_RATES = {
   createdAt: new Date(),
 };
 
-export const MAX_DURATION = 86400; // 24 hours
+export const MAX_DURATION_MINUTES = 1440; // 24 hours
 
 export const DATE_RANGE_START: Duration = {
   days: 30,

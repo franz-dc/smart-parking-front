@@ -17,7 +17,12 @@ import { alpha } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { Circle as CircleIcon } from 'mdi-material-ui';
 import { LoadingIndicator, ErrorAlert } from 'components';
-import { capitalize, getLotFromCoords, getAvailabilityColor } from 'utils';
+import {
+  capitalize,
+  getLotFromCoords,
+  getAvailabilityColor,
+  isLotAvailable,
+} from 'utils';
 import {
   areasService,
   floorsService,
@@ -26,6 +31,8 @@ import {
 } from 'services';
 import { useQueries } from 'react-query';
 import { IArea, IFloor } from 'types';
+import { format, sub } from 'date-fns';
+import { MAX_DURATION_MINUTES } from 'utils/constants';
 
 // ! ADD ENTRANCES
 // ! DECIDE ON A WAY TO STRUCTURE THIS ON THE AREAS DOCUMENT
@@ -46,10 +53,16 @@ const Availability = () => {
       queryKey: 'lots',
       queryFn: lotsService.getLots,
     },
+    // subtract MAX_DURATION_MINUTES from today since those are still active
     {
-      queryKey: 'reservations',
+      queryKey: [
+        'reservationsFromReservationDate',
+        format(sub(new Date(), { minutes: MAX_DURATION_MINUTES }), 'Pp'),
+      ],
       queryFn: () =>
-        reservationsService.getReservationsFromReservationDate(new Date()),
+        reservationsService.getReservationsFromReservationDate(
+          sub(new Date(), { minutes: MAX_DURATION_MINUTES })
+        ),
     },
   ]);
 
@@ -199,14 +212,29 @@ const Availability = () => {
                                   ) === lot.lotNumber
                               );
 
-                              const isReserved = reservations.some(
-                                (reservation) =>
-                                  reservation.lotNumber ===
-                                    currentLot?.lotNumber &&
-                                  reservation.area === currentLot?.area &&
-                                  reservation.floor === currentLot?.floor &&
-                                  !reservation.earlyEnd
-                              );
+                              const isReserved =
+                                currentLot &&
+                                !isLotAvailable(
+                                  reservations.filter(
+                                    (reservation) =>
+                                      reservation.lotNumber ===
+                                        currentLot?.lotNumber &&
+                                      reservation.area === currentLot?.area &&
+                                      reservation.floor === currentLot?.floor &&
+                                      !reservation.earlyEnd
+                                  ),
+                                  {
+                                    dateTime: new Date(),
+                                    duration: 0,
+                                    floor: currentLot.floor,
+                                    area: currentLot.area,
+                                    lotNumber: currentLot.lotNumber,
+                                    reserver: '',
+                                    plateNumber: '',
+                                    earlyEnd: false,
+                                    createdAt: new Date(),
+                                  }
+                                );
 
                               const status = !!currentLot
                                 ? !currentLot.available
