@@ -7,6 +7,7 @@ export interface IUser {
   lastName: string;
   contactNumber: string;
   credits: number;
+  userType?: 'user' | 'admin';
 }
 
 export interface IExtendedUser extends User {
