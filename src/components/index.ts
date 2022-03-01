@@ -5,3 +5,4 @@ export { default as AdminWrapper } from './AdminWrapper';
 export { default as ErrorAlert } from './ErrorAlert';
 export { default as LoadingIndicator } from './LoadingIndicator';
 export { default as ProtectedUserRoute } from './ProtectedUserRoute';
+export { default as ProtectedAdminRoute } from './ProtectedAdminRoute';

@@ -4,11 +4,11 @@ import { SnackbarProvider } from 'notistack';
 import { LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { UserContextProvider } from 'contexts';
-import { ProtectedUserRoute } from 'components';
+import { ProtectedUserRoute, ProtectedAdminRoute } from 'components';
 
 // pages
 import {
@@ -27,8 +27,8 @@ import {
   AdminDashboard,
   UserTopUps,
   ReservationManagement,
-  // Dev
-  Seed,
+  // Dev - commented out for production
+  // Seed,
 } from 'pages';
 
 const queryClient = new QueryClient({
@@ -71,15 +71,24 @@ const App = () => (
                   </Route>
 
                   {/* Admin */}
-                  <Route path='/admin/dashboard' element={<AdminDashboard />} />
-                  <Route path='/admin/top-ups' element={<UserTopUps />} />
-                  <Route
-                    path='/admin/reservations'
-                    element={<ReservationManagement />}
-                  />
+                  <Route element={<ProtectedAdminRoute />}>
+                    <Route
+                      path='/admin'
+                      element={<Navigate replace to='/admin/dashboard' />}
+                    />
+                    <Route
+                      path='/admin/dashboard'
+                      element={<AdminDashboard />}
+                    />
+                    <Route path='/admin/top-ups' element={<UserTopUps />} />
+                    <Route
+                      path='/admin/reservations'
+                      element={<ReservationManagement />}
+                    />
 
-                  {/* Dev */}
-                  <Route path='/dev/seed' element={<Seed />} />
+                    {/* Dev */}
+                    {/* <Route path='/dev/seed' element={<Seed />} /> */}
+                  </Route>
 
                   {/* Misc */}
                   <Route path='*' element={<NotFound />} />
