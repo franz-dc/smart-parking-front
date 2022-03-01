@@ -6,11 +6,12 @@ import { TextField } from 'formik-mui';
 import * as Yup from 'yup';
 import { authService } from 'services';
 import { useSnackbar } from 'notistack';
+import { useUserContext } from 'hooks';
 
 const Login = () => {
   const navigate = useNavigate();
-
   const { enqueueSnackbar } = useSnackbar();
+  const { setUser } = useUserContext();
 
   const validationSchema = Yup.object()
     .shape({
@@ -31,7 +32,8 @@ const Login = () => {
     ...userCredentials
   }: Yup.InferType<typeof validationSchema>) => {
     try {
-      await authService.register(userCredentials);
+      const data = await authService.register(userCredentials);
+      setUser(data);
       navigate('/account-settings');
     } catch (err: any) {
       let message = 'Something went wrong';

@@ -11,18 +11,29 @@ import { db, auth } from 'firebase-config';
 import { IUser, IUserCredentials, IPassword, IExtendedUser } from 'types';
 
 export const authService = {
-  register: async ({ email, password }: IUserCredentials) => {
+  register: async ({
+    email,
+    password,
+  }: IUserCredentials): Promise<IExtendedUser> => {
     const user = await createUserWithEmailAndPassword(auth, email, password);
     const userDocRef = doc(db, 'users', user.user.uid);
-    await setDoc(userDocRef, {
+    const reqBody: Omit<IUser, 'id'> = {
       email,
       firstName: '',
       lastName: '',
       contactNumber: '',
       credits: 0,
       userType: 'user',
-    });
-    return user;
+    };
+    await setDoc(userDocRef, reqBody);
+    const userDetails = {
+      id: user.user.uid,
+      ...reqBody,
+    };
+    return {
+      ...user.user,
+      userDetails,
+    };
   },
   signIn: async ({
     email,
