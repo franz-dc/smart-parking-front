@@ -23,7 +23,11 @@ const Login = () => {
     try {
       const data = await authService.signIn(values);
       setUser(data);
-      navigate('/reservations');
+      if (data.userDetails.userType === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/reservations');
+      }
     } catch (err: any) {
       let message = 'Something went wrong';
 

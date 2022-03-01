@@ -1,9 +1,14 @@
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button, Box, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { ImageBrokenVariant as ImageBrokenVariantIcon } from 'mdi-material-ui';
 
-const NotFound = () => (
+interface NotFoundProps {
+  link?: string;
+}
+
+const NotFound: FC<NotFoundProps> = ({ link }) => (
   <>
     <Helmet title='Page Not Found' />
     <Box
@@ -38,7 +43,7 @@ const NotFound = () => (
         <Typography sx={{ mb: 2 }}>
           The page you requested does not exist.
         </Typography>
-        <Button component={Link} to='/' sx={{ mx: 'auto' }}>
+        <Button component={Link} to={link || '/'} sx={{ mx: 'auto' }}>
           Go home
         </Button>
       </Paper>

@@ -88,6 +88,9 @@ const App = () => (
 
                     {/* Dev */}
                     {/* <Route path='/dev/seed' element={<Seed />} /> */}
+
+                    {/* Admin misc */}
+                    <Route path='*' element={<NotFound link='/admin' />} />
                   </Route>
 
                   {/* Misc */}

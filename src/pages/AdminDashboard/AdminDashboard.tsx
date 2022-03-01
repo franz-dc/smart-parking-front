@@ -18,7 +18,7 @@ import {
   Cards as CardsIcon,
   CardBulleted as CardBulletedIcon,
 } from 'mdi-material-ui';
-import { getAvailabilityColor } from 'utils';
+import { getAvailabilityColor, isLotAvailable } from 'utils';
 import { DATE_RANGE_START } from 'utils/constants';
 import { IReservation, IPopulatedReservation } from 'types';
 
@@ -35,7 +35,8 @@ import {
 echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart]);
 
 const AdminDashboard = () => {
-  const newDateFromNow = sub(new Date(), DATE_RANGE_START);
+  const currentDate = new Date();
+  const newDateFromNow = sub(currentDate, DATE_RANGE_START);
   const dateRangeStartInWords = formatDistanceToNowStrict(newDateFromNow);
 
   const queries = useQueries([
@@ -50,7 +51,7 @@ const AdminDashboard = () => {
     {
       queryKey: 'reservations',
       queryFn: () =>
-        reservationsService.getReservationsFromDateCreated(newDateFromNow),
+        reservationsService.getReservationsFromReservationDate(newDateFromNow),
     },
   ]);
 
@@ -76,20 +77,55 @@ const AdminDashboard = () => {
   const lotCount = lots.length;
   const reservationCount = reservations.length;
 
-  const reservedLots = reservations.reduce((acc, reservation) => {
-    const lot = lots.find(
-      (lot) =>
-        lot.floor === reservation.floor &&
-        lot.area === reservation.area &&
-        lot.lotNumber === reservation.lotNumber
+  const occupiedLots = lots.reduce(
+    (acc, lot) => Number(!lot.available) + acc,
+    0
+  );
+
+  // const reservedLots = reservations.reduce((acc, reservation) => {
+  //   const lot = lots.find(
+  //     (lot) =>
+  //       lot.floor === reservation.floor &&
+  //       lot.area === reservation.area &&
+  //       lot.lotNumber === reservation.lotNumber
+  //   );
+
+  //   const isLotOccupied = lot?.available === false;
+
+  //   return lot && !isLotOccupied ? acc + Number(lot.available) : acc;
+  // }, 0);
+
+  const reservedLots = lots.reduce((acc, lot) => {
+    const isLotReserved = !isLotAvailable(
+      reservations.filter(
+        (reservation) =>
+          reservation.lotNumber === lot?.lotNumber &&
+          reservation.area === lot?.area &&
+          reservation.floor === lot?.floor &&
+          !reservation.earlyEnd
+      ),
+      {
+        dateTime: currentDate,
+        duration: 0,
+        floor: lot.floor,
+        area: lot.area,
+        lotNumber: lot.lotNumber,
+        reserver: '',
+        plateNumber: '',
+        earlyEnd: false,
+        createdAt: currentDate,
+      }
     );
-    return lot ? acc + Number(lot.available) : acc;
+
+    return isLotReserved ? acc + Number(lot.available) : acc;
   }, 0);
 
-  const availableLots =
-    lots.reduce((acc, lot) => Number(lot.available) + acc, 0) - reservedLots;
+  const availableLots = lotCount - occupiedLots - reservedLots;
 
-  const occupiedLots = lotCount - availableLots;
+  // const availableLots =
+  //   lots.reduce((acc, lot) => Number(lot.available) + acc, 0) - reservedLots;
+
+  // const occupiedLots = lotCount - availableLots;
 
   const overviewItems = [
     {
