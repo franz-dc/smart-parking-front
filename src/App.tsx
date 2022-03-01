@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from './theme';
 import { SnackbarProvider } from 'notistack';
@@ -8,12 +7,10 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { UserContext } from 'contexts';
-import { IExtendedUser } from 'types';
-import { usersService } from 'services';
+import { UserContextProvider } from 'contexts';
+import { ProtectedUserRoute } from 'components';
 
-// components
+// pages
 import {
   // Auth
   Login,
@@ -42,58 +39,26 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => {
-  const auth = getAuth();
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <Helmet
+          titleTemplate='%s - Smart Parking System'
+          defaultTitle='Smart Parking System'
+        />
+        <SnackbarProvider>
+          <LocalizationProvider dateAdapter={DateAdapter}>
+            <UserContextProvider>
+              <BrowserRouter>
+                <Routes>
+                  {/* Auth */}
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/register' element={<Register />} />
 
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-
-  const [user, setUser] = useState<IExtendedUser | null>(null);
-
-  onAuthStateChanged(auth, (user) => {
-    setCurrentUser(user);
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (currentUser) {
-        const userData = await usersService.getUserById(currentUser.uid);
-
-        setUser({
-          ...currentUser,
-          userDetails: userData || {
-            id: currentUser?.uid || '',
-            firstName: '',
-            lastName: '',
-            email: '',
-            contactNumber: '',
-            credits: 0,
-          },
-        });
-      }
-    };
-
-    fetchData();
-  }, [currentUser]);
-
-  return (
-    <ThemeProvider theme={theme}>
-      <UserContext.Provider value={{ user, setUser }}>
-        <CssBaseline />
-        <HelmetProvider>
-          <QueryClientProvider client={queryClient}>
-            <Helmet
-              titleTemplate='%s - Smart Parking System'
-              defaultTitle='Smart Parking System'
-            />
-            <SnackbarProvider>
-              <LocalizationProvider dateAdapter={DateAdapter}>
-                <BrowserRouter>
-                  <Routes>
-                    {/* Auth */}
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
-
-                    {/* User */}
+                  {/* User */}
+                  <Route element={<ProtectedUserRoute />}>
                     <Route path='/' element={<Home />} />
                     <Route path='/availability' element={<Availability />} />
                     <Route path='/reserve' element={<Reserve />} />
@@ -103,33 +68,30 @@ const App = () => {
                       element={<AccountSettings />}
                     />
                     <Route path='/top-up' element={<TopUp />} />
+                  </Route>
 
-                    {/* Admin */}
-                    <Route
-                      path='/admin/dashboard'
-                      element={<AdminDashboard />}
-                    />
-                    <Route path='/admin/top-ups' element={<UserTopUps />} />
-                    <Route
-                      path='/admin/reservations'
-                      element={<ReservationManagement />}
-                    />
+                  {/* Admin */}
+                  <Route path='/admin/dashboard' element={<AdminDashboard />} />
+                  <Route path='/admin/top-ups' element={<UserTopUps />} />
+                  <Route
+                    path='/admin/reservations'
+                    element={<ReservationManagement />}
+                  />
 
-                    {/* Dev */}
-                    <Route path='/dev/seed' element={<Seed />} />
+                  {/* Dev */}
+                  <Route path='/dev/seed' element={<Seed />} />
 
-                    {/* Misc */}
-                    <Route path='*' element={<NotFound />} />
-                  </Routes>
-                </BrowserRouter>
-              </LocalizationProvider>
-            </SnackbarProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-          </QueryClientProvider>
-        </HelmetProvider>
-      </UserContext.Provider>
-    </ThemeProvider>
-  );
-};
+                  {/* Misc */}
+                  <Route path='*' element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </UserContextProvider>
+          </LocalizationProvider>
+        </SnackbarProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </HelmetProvider>
+  </ThemeProvider>
+);
 
 export default App;

@@ -37,7 +37,7 @@ const Reservations = () => {
       <UserWrapper title='Reservations'>
         {isLoading && <LoadingIndicator />}
         {isError && <ErrorAlert />}
-        {!isLoading && !isError && (
+        {!isLoading && !isError && !!user && (
           <>
             {reservations.length === 0 ? (
               <Alert severity='info' sx={{ mb: 2 }}>

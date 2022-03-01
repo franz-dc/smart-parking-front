@@ -4,3 +4,4 @@ export { default as UserWrapper } from './UserWrapper';
 export { default as AdminWrapper } from './AdminWrapper';
 export { default as ErrorAlert } from './ErrorAlert';
 export { default as LoadingIndicator } from './LoadingIndicator';
+export { default as ProtectedUserRoute } from './ProtectedUserRoute';
