@@ -82,19 +82,6 @@ const AdminDashboard = () => {
     0
   );
 
-  // const reservedLots = reservations.reduce((acc, reservation) => {
-  //   const lot = lots.find(
-  //     (lot) =>
-  //       lot.floor === reservation.floor &&
-  //       lot.area === reservation.area &&
-  //       lot.lotNumber === reservation.lotNumber
-  //   );
-
-  //   const isLotOccupied = lot?.available === false;
-
-  //   return lot && !isLotOccupied ? acc + Number(lot.available) : acc;
-  // }, 0);
-
   const reservedLots = lots.reduce((acc, lot) => {
     const isLotReserved = !isLotAvailable(
       reservations.filter(
@@ -366,7 +353,7 @@ const AdminDashboard = () => {
                         data: Array(DATE_RANGE_START.days)
                           .fill(null)
                           .map((_, i) => {
-                            const date = sub(new Date(), { days: i });
+                            const date = sub(currentDate, { days: i });
                             return format(date, 'PP');
                           })
                           .reverse(),
@@ -389,8 +376,8 @@ const AdminDashboard = () => {
                             reservations.reduce(
                               (acc, reservation) =>
                                 isSameDay(
-                                  reservation.createdAt,
-                                  sub(new Date(), { days: i })
+                                  reservation.dateTime,
+                                  sub(currentDate, { days: i })
                                 )
                                   ? acc + 1
                                   : acc,
