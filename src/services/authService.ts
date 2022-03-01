@@ -6,24 +6,45 @@ import {
   updateProfile,
   updatePassword,
 } from 'firebase/auth';
-import { auth } from 'firebase-config';
-import { IUserCredentials, IPassword } from 'types';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db, auth } from 'firebase-config';
+import { IUser, IUserCredentials, IPassword, IExtendedUser } from 'types';
 
 export const authService = {
   register: async ({ email, password }: IUserCredentials) => {
     const user = await createUserWithEmailAndPassword(auth, email, password);
+    const userDocRef = doc(db, 'users', user.user.uid);
+    await setDoc(userDocRef, {
+      email,
+      firstName: '',
+      lastName: '',
+      contactNumber: '',
+      credits: 0,
+      userType: 'user',
+    });
     return user;
   },
-  signIn: async ({ email, password }: IUserCredentials) => {
+  signIn: async ({
+    email,
+    password,
+  }: IUserCredentials): Promise<IExtendedUser> => {
     const user = await signInWithEmailAndPassword(auth, email, password);
-    return user;
+    const userDocRef = doc(db, 'users', user.user.uid);
+    const userDocSnap = await getDoc(userDocRef);
+    const userDetails = {
+      id: user.user.uid,
+      ...(userDocSnap.data() as Omit<IUser, 'id'>),
+    };
+    return {
+      ...user.user,
+      userDetails,
+    };
   },
   signOut: async () => await signOut(auth),
   updateUser: async (user: any) => {
     const auth = getAuth();
     if (auth.currentUser) {
-      const updatedUser = await updateProfile(auth.currentUser, user);
-      return updatedUser;
+      await updateProfile(auth.currentUser, user);
     } else {
       throw new Error('User not logged in. Please sign in first.');
     }

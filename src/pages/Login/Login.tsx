@@ -7,11 +7,12 @@ import * as Yup from 'yup';
 import { authService } from 'services';
 import { useSnackbar } from 'notistack';
 import { IUserCredentials } from 'types';
+import { useUserContext } from 'hooks';
 
 const Login = () => {
   const navigate = useNavigate();
-
   const { enqueueSnackbar } = useSnackbar();
+  const { setUser } = useUserContext();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -20,7 +21,8 @@ const Login = () => {
 
   const handleSubmit = async (values: IUserCredentials) => {
     try {
-      await authService.signIn(values);
+      const data = await authService.signIn(values);
+      setUser(data);
       navigate('/reservations');
     } catch (err: any) {
       let message = 'Something went wrong';
