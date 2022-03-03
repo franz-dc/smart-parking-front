@@ -53,13 +53,15 @@ const App = () => (
             <UserContextProvider>
               <BrowserRouter>
                 <Routes>
+                  {/* Home */}
+                  <Route path='/' element={<Home />} />
+
                   {/* Auth */}
                   <Route path='/login' element={<Login />} />
                   <Route path='/register' element={<Register />} />
 
                   {/* User */}
                   <Route element={<ProtectedUserRoute />}>
-                    <Route path='/' element={<Home />} />
                     <Route path='/availability' element={<Availability />} />
                     <Route path='/reserve' element={<Reserve />} />
                     <Route path='/reservations' element={<Reservations />} />
