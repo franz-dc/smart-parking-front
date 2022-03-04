@@ -26,7 +26,7 @@ const UserTopUps = () => {
     {
       onSuccess: (data) => {
         queryClient.setQueryData<ITopUp[]>(
-          ['topUps', { status: 'pending' }],
+          ['topUps', { status: 'credited' }],
           (prevData) =>
             prevData ? prevData.filter((topUp) => topUp.id !== data.id) : []
         );
@@ -47,7 +47,7 @@ const UserTopUps = () => {
     {
       onSuccess: (data) => {
         queryClient.setQueryData<ITopUp[]>(
-          ['topUps', { status: 'pending' }],
+          ['topUps', { status: 'rejected' }],
           (prevData) =>
             prevData ? prevData.filter((topUp) => topUp.id !== data.id) : []
         );
@@ -84,7 +84,7 @@ const UserTopUps = () => {
               type: 'actions',
               // @ts-ignore
               getActions: (params: GridRowParams<ITopUp>) => {
-                const { id, ...topUp } = params.row;
+                const { id, userDetails, ...topUp } = params.row;
 
                 return [
                   <GridActionsCellItem

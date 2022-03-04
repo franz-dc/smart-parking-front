@@ -1,3 +1,5 @@
+import { IUser } from 'types';
+
 export interface ITopUp {
   id: string;
   amount: number;
@@ -6,6 +8,8 @@ export interface ITopUp {
   referenceNumber: string;
   status: 'pending' | 'credited' | 'rejected';
   userId: string;
+  // for rendering only
+  userDetails?: IUser;
 }
 
 export interface IUpdateTopUpParams {
