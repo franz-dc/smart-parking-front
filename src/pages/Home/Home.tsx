@@ -84,7 +84,7 @@ const Home = () => {
                   component='div'
                   sx={{ color: 'white' }}
                 >
-                  Brand
+                  Smart Parking
                 </Typography>
               </Grid>
             </Grid>

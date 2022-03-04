@@ -87,7 +87,7 @@ const AuthBase: FC<AuthBaseProps> = ({ children, type }) => (
               }}
             >
               <Typography variant='h3' component='div'>
-                Brand
+                Smart Parking
               </Typography>
             </Grid>
           </Grid>
