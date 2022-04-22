@@ -42,13 +42,16 @@ const queryClient = new QueryClient({
 const App = () => (
   <ThemeProvider theme={theme}>
     <CssBaseline />
+    {/* @ts-ignore */}
     <HelmetProvider>
+      {/* @ts-ignore */}
       <QueryClientProvider client={queryClient}>
         <Helmet
           titleTemplate='%s - Smart Parking System'
           defaultTitle='Smart Parking System'
         />
         <SnackbarProvider>
+          {/* @ts-ignore */}
           <LocalizationProvider dateAdapter={DateAdapter}>
             <UserContextProvider>
               <BrowserRouter>

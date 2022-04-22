@@ -151,8 +151,10 @@ const ReservationManagement = () => {
       headerName: 'Date created',
       type: 'dateTime',
       width: 180,
-      valueGetter: (params: GridValueFormatterParams) =>
-        format(params.value as Date, 'PPp'),
+      valueGetter: ({
+        value,
+      }: GridValueGetterParams<Date, IPopulatedReservation>) =>
+        value ? format(value, 'PPp') : '',
     },
     {
       field: 'name',

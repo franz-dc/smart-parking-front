@@ -1,5 +1,6 @@
 import {
   FC,
+  PropsWithChildren,
   Dispatch,
   SetStateAction,
   createContext,
@@ -18,7 +19,9 @@ export const UserContext = createContext<{
   setUser: () => {},
 });
 
-export const UserContextProvider: FC = ({ children }) => {
+export const UserContextProvider: FC<PropsWithChildren<{}>> = ({
+  children,
+}) => {
   const [baseUser, setBaseUser] = useState<User | null>(null);
   const [user, setUser] = useState<IExtendedUser | null>(null);
 
