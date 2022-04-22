@@ -17,8 +17,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { authService } from '~/services';
 import { useUserContext } from '~/hooks';
 import { formatCurrency } from '~/utils';
-
-const brandLogo = import.meta.env.PUBLIC_URL + '/logo192.png';
+import brandLogo from '~/assets/images/logo.png';
 
 interface BaseWrapperProps {
   children?: ReactNode;
