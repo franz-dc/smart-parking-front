@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
-import * as path from 'path';
+import checker from 'vite-plugin-checker';
 
 export default defineConfig({
   build: {
@@ -9,12 +10,13 @@ export default defineConfig({
   publicDir: '../public',
   resolve: {
     alias: {
-      '~': path.resolve(__dirname, 'src'),
+      '~': resolve(__dirname, 'src'),
     },
   },
   plugins: [
     react({
       include: '**/*.{jsx,tsx}',
     }),
+    checker({ typescript: true }),
   ],
 });
