@@ -7,8 +7,8 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { UserContextProvider } from 'contexts';
-import { ProtectedUserRoute, ProtectedAdminRoute } from 'components';
+import { UserContextProvider } from '~/contexts';
+import { ProtectedUserRoute, ProtectedAdminRoute } from '~/components';
 
 // pages
 import {
@@ -29,7 +29,7 @@ import {
   ReservationManagement,
   // Dev - commented out for production
   // Seed,
-} from 'pages';
+} from '~/pages';
 
 const queryClient = new QueryClient({
   defaultOptions: {

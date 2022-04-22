@@ -12,8 +12,8 @@ import { TextField } from 'formik-mui';
 import { useSnackbar } from 'notistack';
 import * as Yup from 'yup';
 import { serverTimestamp } from 'firebase/firestore';
-import { useUserContext } from 'hooks';
-import { topUpsService } from 'services';
+import { useUserContext } from '~/hooks';
+import { topUpsService } from '~/services';
 
 interface TopUpModalProps {
   open: boolean;

@@ -1,4 +1,4 @@
-import { IReservation, IRates } from 'types';
+import { IReservation, IRates } from '~/types';
 
 export const getReservationAmount = (
   reservation: IReservation | Omit<IReservation, 'id'>,

@@ -8,10 +8,10 @@ import {
 } from '@mui/x-data-grid';
 import { format } from 'date-fns';
 import { useQuery } from 'react-query';
-import { topUpsService } from 'services';
-import { useUserContext } from 'hooks';
-import { LoadingIndicator, ErrorAlert } from 'components';
-import { capitalize, formatCurrency } from 'utils';
+import { topUpsService } from '~/services';
+import { useUserContext } from '~/hooks';
+import { LoadingIndicator, ErrorAlert } from '~/components';
+import { capitalize, formatCurrency } from '~/utils';
 
 const TopUpHistory = () => {
   const { user } = useUserContext();

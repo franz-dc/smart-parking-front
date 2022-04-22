@@ -2,11 +2,11 @@ import { Link, Navigate } from 'react-router-dom';
 import { Box, Typography, Grid, Button } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
-import { useUserContext } from 'hooks';
+import { useUserContext } from '~/hooks';
 
 // assets
-import bg from 'assets/images/home-bg.jpg';
-import logo from 'assets/images/logo.png';
+import bg from '~/assets/images/home-bg.jpg';
+import logo from '~/assets/images/logo.png';
 
 const Home = () => {
   const { user } = useUserContext();

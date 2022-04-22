@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { UserWrapper } from 'components';
+import { UserWrapper } from '~/components';
 import { Helmet } from 'react-helmet-async';
 import {
   Box,
@@ -16,23 +16,23 @@ import {
 import { alpha } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { Circle as CircleIcon } from 'mdi-material-ui';
-import { LoadingIndicator, ErrorAlert } from 'components';
+import { LoadingIndicator, ErrorAlert } from '~/components';
 import {
   capitalize,
   getLotFromCoords,
   getAvailabilityColor,
   isLotAvailable,
-} from 'utils';
+} from '~/utils';
 import {
   areasService,
   floorsService,
   lotsService,
   reservationsService,
-} from 'services';
+} from '~/services';
 import { useQueries } from 'react-query';
-import { IArea, IFloor } from 'types';
+import { IArea, IFloor } from '~/types';
 import { format, sub } from 'date-fns';
-import { MAX_DURATION_MINUTES } from 'utils/constants';
+import { MAX_DURATION_MINUTES } from '~/utils/constants';
 
 // ! ADD ENTRANCES
 // ! DECIDE ON A WAY TO STRUCTURE THIS ON THE AREAS DOCUMENT

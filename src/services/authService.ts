@@ -7,8 +7,8 @@ import {
   updatePassword,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db, auth } from 'firebase-config';
-import { IUser, IUserCredentials, IPassword, IExtendedUser } from 'types';
+import { db, auth } from '~/firebase-config';
+import { IUser, IUserCredentials, IPassword, IExtendedUser } from '~/types';
 
 export const authService = {
   register: async ({

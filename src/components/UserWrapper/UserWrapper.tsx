@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BaseWrapper } from 'components';
+import { BaseWrapper } from '~/components';
 
 interface UserWrapperProps {
   title: string;

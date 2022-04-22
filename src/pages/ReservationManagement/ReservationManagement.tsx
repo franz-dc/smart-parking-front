@@ -10,14 +10,14 @@ import {
   GridSortModel,
   GridActionsCellItem,
 } from '@mui/x-data-grid';
-import { AdminWrapper, LoadingIndicator, ErrorAlert } from 'components';
+import { AdminWrapper, LoadingIndicator, ErrorAlert } from '~/components';
 import { useQuery, useQueryClient, useMutation } from 'react-query';
-import { reservationsService, usersService } from 'services';
+import { reservationsService, usersService } from '~/services';
 import {
   IReservation,
   IPopulatedReservation,
   IUpdateReservationParams,
-} from 'types';
+} from '~/types';
 import { format, isWithinInterval, add, sub, isValid } from 'date-fns';
 import { Close as CloseIcon, Delete as DeleteIcon } from 'mdi-material-ui';
 import { useSnackbar } from 'notistack';

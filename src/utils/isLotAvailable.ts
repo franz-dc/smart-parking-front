@@ -1,4 +1,4 @@
-import { IReservation } from 'types';
+import { IReservation } from '~/types';
 import { add, isWithinInterval } from 'date-fns';
 
 // ! rename to isLotNotReserved

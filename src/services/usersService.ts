@@ -1,4 +1,4 @@
-import { db } from 'firebase-config';
+import { db } from '~/firebase-config';
 import {
   collection,
   doc,
@@ -13,7 +13,7 @@ import {
   DocumentData,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { IUser } from 'types';
+import { IUser } from '~/types';
 
 const usersRef = collection(db, 'users');
 

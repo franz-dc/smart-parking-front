@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { UserWrapper } from 'components';
+import { UserWrapper } from '~/components';
 import { AppBar, Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 

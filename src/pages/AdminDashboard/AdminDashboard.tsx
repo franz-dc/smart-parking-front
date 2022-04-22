@@ -8,9 +8,9 @@ import {
   GridValueFormatterParams,
   GridSortModel,
 } from '@mui/x-data-grid';
-import { AdminWrapper, LoadingIndicator, ErrorAlert } from 'components';
+import { AdminWrapper, LoadingIndicator, ErrorAlert } from '~/components';
 import { useQueries } from 'react-query';
-import { usersService, lotsService, reservationsService } from 'services';
+import { usersService, lotsService, reservationsService } from '~/services';
 import { sub, formatDistanceToNowStrict, format, isSameDay } from 'date-fns';
 import {
   Account as AccountIcon,
@@ -18,9 +18,9 @@ import {
   Cards as CardsIcon,
   CardBulleted as CardBulletedIcon,
 } from 'mdi-material-ui';
-import { getAvailabilityColor, isLotAvailable } from 'utils';
-import { DATE_RANGE_START } from 'utils/constants';
-import { IReservation, IPopulatedReservation } from 'types';
+import { getAvailabilityColor, isLotAvailable } from '~/utils';
+import { DATE_RANGE_START } from '~/utils/constants';
+import { IReservation, IPopulatedReservation } from '~/types';
 
 // charts
 import EChartsReact from 'echarts-for-react';

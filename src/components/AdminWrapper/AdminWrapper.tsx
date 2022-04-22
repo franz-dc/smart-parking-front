@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { BaseWrapper } from 'components';
+import { BaseWrapper } from '~/components';
 
 interface AdminWrapperProps {
   title: string;

@@ -7,11 +7,11 @@ import {
   GridValueFormatterParams,
   GridSortModel,
 } from '@mui/x-data-grid';
-import { LoadingIndicator, ErrorAlert } from 'components';
+import { LoadingIndicator, ErrorAlert } from '~/components';
 import { useQuery } from 'react-query';
-import { topUpsService, usersService } from 'services';
+import { topUpsService, usersService } from '~/services';
 import { format } from 'date-fns';
-import { formatCurrency } from 'utils';
+import { formatCurrency } from '~/utils';
 
 interface UserTopUpsBaseProps {
   status: string;

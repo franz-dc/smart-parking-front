@@ -7,9 +7,9 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { IExtendedUser } from 'types';
+import { IExtendedUser } from '~/types';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { usersService } from 'services';
+import { usersService } from '~/services';
 
 export const UserContext = createContext<{
   user: IExtendedUser | null;

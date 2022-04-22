@@ -3,8 +3,8 @@ import { Box, Grid, Typography } from '@mui/material';
 import AuthLink from './AuthLink';
 
 // assets
-import bg from 'assets/images/home-bg.jpg';
-import logo from 'assets/images/logo.png';
+import bg from '~/assets/images/home-bg.jpg';
+import logo from '~/assets/images/logo.png';
 
 interface AuthBaseProps {
   children: ReactNode;

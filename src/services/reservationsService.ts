@@ -1,4 +1,4 @@
-import { db } from 'firebase-config';
+import { db } from '~/firebase-config';
 import {
   doc,
   collection,
@@ -12,9 +12,9 @@ import {
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore';
-import { IReservation, IRates, IUpdateReservationParams } from 'types';
-import { usersService, lotsService } from 'services';
-import { getReservationAmount, isLotAvailable } from 'utils';
+import { IReservation, IRates, IUpdateReservationParams } from '~/types';
+import { usersService, lotsService } from '~/services';
+import { getReservationAmount, isLotAvailable } from '~/utils';
 
 const reservationsRef = collection(db, 'reservations');
 

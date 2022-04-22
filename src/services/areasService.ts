@@ -1,6 +1,6 @@
-import { db } from 'firebase-config';
+import { db } from '~/firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
-import { IArea } from 'types';
+import { IArea } from '~/types';
 
 const areasRef = collection(db, 'areas');
 

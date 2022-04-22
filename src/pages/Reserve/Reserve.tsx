@@ -1,5 +1,5 @@
 import { ChangeEvent, useMemo } from 'react';
-import { UserWrapper, LoadingIndicator, ErrorAlert } from 'components';
+import { UserWrapper, LoadingIndicator, ErrorAlert } from '~/components';
 import { Helmet } from 'react-helmet-async';
 import { Typography, Box, MenuItem, Paper } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -7,18 +7,18 @@ import { Formik, Form, Field } from 'formik';
 import { TextField, Select } from 'formik-mui';
 import { DateTimePicker } from 'formik-mui-lab';
 import * as Yup from 'yup';
-import { formatCurrency, getReservationAmount } from 'utils';
+import { formatCurrency, getReservationAmount } from '~/utils';
 import {
   floorsService,
   areasService,
   lotsService,
   ratesService,
   reservationsService,
-} from 'services';
+} from '~/services';
 import { useQueries } from 'react-query';
 import { useSnackbar } from 'notistack';
-import { useUserContext } from 'hooks';
-import { DEFAULT_RATES, MAX_DURATION_MINUTES } from 'utils/constants';
+import { useUserContext } from '~/hooks';
+import { DEFAULT_RATES, MAX_DURATION_MINUTES } from '~/utils/constants';
 import { serverTimestamp } from 'firebase/firestore';
 import { formatDistance, addMinutes } from 'date-fns';
 

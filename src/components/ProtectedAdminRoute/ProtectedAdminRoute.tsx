@@ -1,6 +1,6 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import { useUserContext } from 'hooks';
-import { NotFound } from 'pages';
+import { useUserContext } from '~/hooks';
+import { NotFound } from '~/pages';
 
 const ProtectedUserRoute = () => {
   const { user } = useUserContext();

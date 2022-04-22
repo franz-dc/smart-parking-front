@@ -3,9 +3,9 @@ import { Paper, Typography, Button, Box } from '@mui/material';
 import { TopUpModal } from '../Modals';
 
 // assets
-import gcashQR from 'assets/images/gcash-qr.png';
-import payMayaQR from 'assets/images/paymaya-qr.jpg';
-import coinsphQR from 'assets/images/coinsph-qr.jpg';
+import gcashQR from '~/assets/images/gcash-qr.png';
+import payMayaQR from '~/assets/images/paymaya-qr.jpg';
+import coinsphQR from '~/assets/images/coinsph-qr.jpg';
 
 interface ITopUpMethod {
   name: string;

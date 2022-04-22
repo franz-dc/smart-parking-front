@@ -1,7 +1,7 @@
-import { db } from 'firebase-config';
+import { db } from '~/firebase-config';
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
-import { IRates } from 'types';
-import { DEFAULT_RATES } from 'utils/constants';
+import { IRates } from '~/types';
+import { DEFAULT_RATES } from '~/utils/constants';
 
 const ratesRef = collection(db, 'rates');
 

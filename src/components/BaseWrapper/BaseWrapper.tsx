@@ -14,11 +14,11 @@ import {
 } from '@mui/material';
 import { Menu as MenuIcon } from 'mdi-material-ui';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { authService } from 'services';
-import { useUserContext } from 'hooks';
-import { formatCurrency } from 'utils';
+import { authService } from '~/services';
+import { useUserContext } from '~/hooks';
+import { formatCurrency } from '~/utils';
 
-const brandLogo = process.env.PUBLIC_URL + '/logo192.png';
+const brandLogo = import.meta.env.PUBLIC_URL + '/logo192.png';
 
 interface BaseWrapperProps {
   children?: ReactNode;

@@ -1,6 +1,6 @@
 import { writeBatch, doc } from 'firebase/firestore';
-import { db } from 'firebase-config';
-import { ILot } from 'types';
+import { db } from '~/firebase-config';
+import { ILot } from '~/types';
 
 interface ISeedLotsOptions {
   areas?: string[];

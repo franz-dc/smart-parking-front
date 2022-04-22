@@ -10,10 +10,10 @@ import {
   Avatar,
   Grid,
 } from '@mui/material';
-import { ErrorAlert, LoadingIndicator, UserWrapper } from 'components';
-import { useUserContext } from 'hooks';
-import { reservationsService } from 'services';
-import { IReservation } from 'types';
+import { ErrorAlert, LoadingIndicator, UserWrapper } from '~/components';
+import { useUserContext } from '~/hooks';
+import { reservationsService } from '~/services';
+import { IReservation } from '~/types';
 import { useQuery } from 'react-query';
 import { format, compareDesc } from 'date-fns';
 

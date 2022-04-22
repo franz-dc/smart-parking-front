@@ -2,7 +2,7 @@ import { LoadingButton } from '@mui/lab';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import * as Yup from 'yup';
-import { authService } from 'services';
+import { authService } from '~/services';
 import { useSnackbar } from 'notistack';
 
 const Security = () => {

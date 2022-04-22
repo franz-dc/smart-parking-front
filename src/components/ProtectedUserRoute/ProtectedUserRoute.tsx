@@ -1,5 +1,5 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import { useUserContext } from 'hooks';
+import { useUserContext } from '~/hooks';
 
 const ProtectedUserRoute = () => {
   const { user } = useUserContext();

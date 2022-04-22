@@ -1,6 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import { seedLots } from 'utils';
+import { seedLots } from '~/utils';
 
 interface ISeeder {
   name: string;

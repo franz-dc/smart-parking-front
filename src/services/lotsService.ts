@@ -1,6 +1,6 @@
-import { db } from 'firebase-config';
+import { db } from '~/firebase-config';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { ILot } from 'types';
+import { ILot } from '~/types';
 
 interface GetLotByDetailsParams {
   floor: string;

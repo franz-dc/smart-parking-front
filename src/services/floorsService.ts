@@ -1,6 +1,6 @@
-import { db } from 'firebase-config';
+import { db } from '~/firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
-import { IFloor } from 'types';
+import { IFloor } from '~/types';
 
 const floorsRef = collection(db, 'floors');
 

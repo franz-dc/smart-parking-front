@@ -1,4 +1,4 @@
-import { db } from 'firebase-config';
+import { db } from '~/firebase-config';
 import {
   collection,
   doc,
@@ -13,12 +13,12 @@ import {
   increment,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { usersService } from 'services';
+import { usersService } from '~/services';
 import {
   ITopUp,
   IUpdateTopUpParams,
   IUpdateTopUpParamsWithStatus,
-} from 'types';
+} from '~/types';
 
 const topUpsRef = collection(db, 'topUps');
 
